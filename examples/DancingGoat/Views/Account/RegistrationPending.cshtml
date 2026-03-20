@@ -1,0 +1,40 @@
+@model DancingGoat.Models.RegistrationPendingViewModel
+
+@{
+    ViewBag.Title = HtmlLocalizer["Check your email"].Value;
+    ViewData["PageClass"] = "inverted";
+}
+
+<div class="signin-register">
+    <div class="row">
+        <div class="col-md-6 zone-dark">
+            <h2>@HtmlLocalizer["Check your email"]</h2>
+            <p>@HtmlLocalizer["We created your account, but you need to confirm your email address before you can sign in."]</p>
+
+            @if (!string.IsNullOrWhiteSpace(Model.Email))
+            {
+                <p><strong>@HtmlLocalizer["Email:"]</strong> @Model.Email</p>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+            {
+                <p class="text-danger">@Model.StatusMessage</p>
+            }
+            else
+            {
+                <p>@HtmlLocalizer["We sent a verification link to your email address. Follow that link to activate your account."]</p>
+            }
+
+            <div class="separator"></div>
+
+            <h3>@HtmlLocalizer["Need another email?"]</h3>
+            <p>@HtmlLocalizer["If the message has not arrived yet, request a new verification email."]</p>
+            <partial name="_ResendVerificationEmailForm" model="Model.ResendVerificationEmail" />
+        </div>
+        <div class="col-md-6 zone-light">
+            <h2>@HtmlLocalizer["Already confirmed your email?"]</h2>
+            <p>@HtmlLocalizer["Once your email is confirmed, you can sign in to your account."]</p>
+            @Html.ActionLink(HtmlLocalizer["Sign in"].Value, "Login", null, null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+</div>

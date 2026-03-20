@@ -2,13 +2,11 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "npm",
-      "script": "install",
-      "path": "src/Kentico.Xperience.RepoTemplate.Admin/Client",
+      "type": "dotnet",
+      "task": "restore",
+      "problemMatcher": ["$msCompile"],
       "group": "build",
-      "problemMatcher": [],
-      "label": "npm: install - Admin/Client",
-      "detail": "install dependencies from package"
+      "label": "dotnet: restore"
     },
     {
       "type": "dotnet",
@@ -20,12 +18,7 @@
     {
       "type": "shell",
       "command": "dotnet",
-      "args": [
-        "format",
-        "Kentico.Xperience.RepoTemplate.slnx",
-        "--exclude",
-        "./examples/**"
-      ],
+      "args": ["format", "DancingGoat.slnx"],
       "problemMatcher": ["$msCompile"],
       "group": "none",
       "label": "dotnet: format"
@@ -37,32 +30,7 @@
       "group": "build",
       "label": "dotnet: clean"
     },
-    {
-      "type": "npm",
-      "script": "build",
-      "path": "src/Kentico.Xperience.RepoTemplate.Admin/Client",
-      "group": "build",
-      "problemMatcher": [],
-      "label": "npm: build - Admin/Client",
-      "detail": "webpack --mode=production"
-    },
-    {
-      "type": "npm",
-      "script": "build:dev",
-      "path": "src/Kentico.Xperience.RepoTemplate.Admin/Client",
-      "group": "build",
-      "problemMatcher": [],
-      "label": "npm: build:dev - Admin/Client",
-      "detail": "webpack --mode=development"
-    },
-    {
-      "type": "npm",
-      "script": "start",
-      "path": "src/Kentico.Xperience.RepoTemplate.Admin/Client",
-      "problemMatcher": [],
-      "label": "npm: watch - Admin/Client",
-      "detail": "webpack serve --mode development"
-    },
+
     {
       "label": "dotnet: watch DancingGoat",
       "command": "dotnet",
@@ -79,6 +47,53 @@
         }
       },
       "problemMatcher": "$msCompile"
+    },
+    {
+      "type": "npm",
+      "script": "install",
+      "path": "tests",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: install - tests",
+      "detail": "install dependencies from package"
+    },
+    {
+      "type": "shell",
+      "command": "npx",
+      "args": ["playwright", "install", "--with-deps"],
+      "options": {
+        "cwd": "${workspaceFolder}/tests"
+      },
+      "problemMatcher": [],
+      "label": "playwright: install browsers"
+    },
+    {
+      "label": "playwright: setup",
+      "dependsOrder": "sequence",
+      "dependsOn": ["npm: install - tests", "playwright: install browsers"],
+      "problemMatcher": []
+    },
+    {
+      "type": "shell",
+      "command": "npx",
+      "args": ["playwright", "test"],
+      "dependsOrder": "sequence",
+      "dependsOn": ["playwright: setup"],
+      "options": {
+        "cwd": "${workspaceFolder}/tests"
+      },
+      "problemMatcher": [],
+      "label": "playwright: test"
+    },
+    {
+      "type": "shell",
+      "command": "npx",
+      "args": ["playwright", "show-report"],
+      "options": {
+        "cwd": "${workspaceFolder}/tests"
+      },
+      "problemMatcher": [],
+      "label": "playwright: show report"
     }
   ]
 }

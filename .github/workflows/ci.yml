@@ -7,57 +7,85 @@ on:
     branches: [main]
 
 jobs:
-  dotnet-format:
-    name: .Net Format Check
+  test:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          global-json-file: global.json
-
-      - name: Run dotnet format
-        run: dotnet format Kentico.Xperience.RepoTemplate.slnx --exclude ./examples/** --verify-no-changes
-
-  build_and_test:
-    name: Build and Test
-    runs-on: ubuntu-latest
-    needs: dotnet-format
+    env:
+      SQL_SERVER_HOST: localhost
+      SQL_SERVER_SA_PASSWORD: Pass@12345
+      SQL_SERVER_DATABASE: xk-31-02-03
     defaults:
       run:
-        shell: pwsh
-
-    env:
-      ASPNETCORE_ENVIRONMENT: CI
-      DOTNET_CLI_TELEMETRY_OPTOUT: 1
-      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-      DOTNET_NOLOGO: 1
-
+        working-directory: tests
     steps:
       - uses: actions/checkout@v6
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: tests/package-lock.json
+      - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
+      - name: Restore .NET dependencies
+        working-directory: .
+        run: dotnet restore
+      - name: Build .NET solution
+        working-directory: .
+        run: dotnet build --no-restore
+      - name: Restore Dancing Goat tools
+        working-directory: examples/DancingGoat
+        run: dotnet tool restore
+      - name: Start SQL Server
+        run: |
+          docker run --name xperience-sql \
+            -e ACCEPT_EULA=Y \
+            -e MSSQL_SA_PASSWORD="$SQL_SERVER_SA_PASSWORD" \
+            -p 1433:1433 \
+            -d mcr.microsoft.com/mssql/server:2022-latest
+      - name: Wait for SQL Server
+        run: |
+          for attempt in {1..60}; do
+            if docker exec xperience-sql /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$SQL_SERVER_SA_PASSWORD" -C -Q "SELECT 1" >/dev/null 2>&1; then
+              exit 0
+            fi
 
+            sleep 2
+          done
+
+          docker logs xperience-sql
+          exit 1
+      - name: Install Xperience database
+        working-directory: examples/DancingGoat
+        env:
+          KENTICO_LICENSE_FILE: ${{ secrets['KENTICO_LICENSE_FILE'] }}
+        run: |
+          if [ -z "$KENTICO_LICENSE_FILE" ]; then
+            echo "Missing KENTICO_LICENSE_FILE secret."
+            exit 1
+          fi
+
+          license_file="$(mktemp)"
+          trap 'rm -f "$license_file"' EXIT
+          printf '%s' "$KENTICO_LICENSE_FILE" > "$license_file"
+
+          dotnet kentico-xperience-dbmanager -- \
+            -s "$SQL_SERVER_HOST" \
+            -u "sa" \
+            -p "$SQL_SERVER_SA_PASSWORD" \
+            -a "$SQL_SERVER_SA_PASSWORD" \
+            -d "$SQL_SERVER_DATABASE" \
+            --license-file "$license_file" \
+            --recreate-existing-database
       - name: Install dependencies
-        run: |
-          dotnet restore `
-            --locked-mode
-
-      - name: Build Solution
-        run: |
-          dotnet build `
-            --configuration Release `
-            --no-restore
-
-      - name: Test Solution
-        run: |
-          dotnet test `
-            --configuration Release `
-            --no-build `
-            --no-restore
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        run: npx playwright test
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: tests/playwright-report/
+          retention-days: 30

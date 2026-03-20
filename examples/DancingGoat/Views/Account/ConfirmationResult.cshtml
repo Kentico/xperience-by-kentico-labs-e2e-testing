@@ -1,0 +1,41 @@
+@model DancingGoat.Models.EmailConfirmationResultViewModel
+
+@{
+    ViewBag.Title = Model.Heading;
+    ViewData["PageClass"] = "inverted";
+}
+
+<div class="signin-register">
+    <div class="row">
+        <div class="col-md-6 zone-dark">
+            <h2>@Model.Heading</h2>
+            <p class="@(Model.IsError ? "text-danger" : string.Empty)">@Model.Message</p>
+
+            @if (!string.IsNullOrWhiteSpace(Model.Email))
+            {
+                <p><strong>@HtmlLocalizer["Email:"]</strong> @Model.Email</p>
+            }
+
+            @if (Model.ShowResendForm && (Model.ResendVerificationEmail != null))
+            {
+                <div class="separator"></div>
+                <h3>@HtmlLocalizer["Request a new verification email"]</h3>
+                <partial name="_ResendVerificationEmailForm" model="Model.ResendVerificationEmail" />
+            }
+        </div>
+        <div class="col-md-6 zone-light">
+            @if (Model.ShowLoginLink)
+            {
+                <h2>@HtmlLocalizer["Sign in"]</h2>
+                <p>@HtmlLocalizer["Your account is ready. Continue to the sign-in page."]</p>
+                @Html.ActionLink(HtmlLocalizer["Go to sign in"].Value, "Login", null, null, new { @class = "btn btn-primary" })
+            }
+            else
+            {
+                <h2>@HtmlLocalizer["Register"]</h2>
+                <p>@HtmlLocalizer["Need to start over? You can register again."]</p>
+                @Html.ActionLink(HtmlLocalizer["Register"].Value, "Register", null, null, new { @class = "btn btn-secondary btn-default" })
+            }
+        </div>
+    </div>
+</div>

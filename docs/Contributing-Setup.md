@@ -1,9 +1,5 @@
 # Contributing Setup
 
----This documents the steps a maintainer or developer would follow to work on the library in their development environment---
-
----Update the details for this project, replacing "repotemplate" and anything else that needs changed---
-
 ## Required Software
 
 The requirements to setup, develop, and build this project are listed below.
@@ -46,19 +42,6 @@ Running the sample project requires creating a new Xperience by Kentico database
 
 Change directory in your console to `./examples/DancingGoat` and follow the instructions in the Xperience
 documentation on [creating a new database](https://docs.kentico.com/documentation/developers-and-admins/installation#create-the-project-database).
-
-### Admin Customization
-
-To run the Sample app Admin customization in development mode, add the following to your [User Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-10.0&tabs=windows#secret-manager) for the application.
-
-```json
-"CMSAdminClientModuleSettings": {
-  "kentico-xperience-integrations-repotemplate": {
-    "Mode": "Proxy",
-    "Port": 3009
-  }
-}
-```
 
 ## Development Workflow
 

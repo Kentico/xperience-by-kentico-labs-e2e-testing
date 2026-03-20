@@ -1,0 +1,9 @@
+@model DancingGoat.Models.ResendVerificationEmailViewModel
+
+<form asp-action="ResendVerificationEmail" method="post">
+    <div class="form-horizontal">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Email)
+        <input type="submit" value="@HtmlLocalizer["Send a new verification email"]" class="btn btn-secondary btn-default" />
+    </div>
+</form>
