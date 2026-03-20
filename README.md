@@ -8,7 +8,14 @@ This project uses Playwright and the Xperience by Kentico Virtual Inbox integrat
 
 It has a functioning GitHub actions CI pipeline that performs E2E tests on the Dancing Goat membership experience.
 
-It is part of the Kentico Community Portal blog post [Virtual Inbox, Real Tests: AI-driven E2E automation for Xperience by Kentico membership flows](https://community.kentico.com/blog/virtual-inbox-real-tests-ai-driven-e2e-automation-for-xperience-by-kentico-membership-flows)
+You can review the CI GitHub workflow runs and Playwright test report:
+
+- [View the repository actions](https://github.com/Kentico/xperience-by-kentico-labs-e2e-membership-testing/actions/workflows/ci.yml).
+- [Navigate to the artifacts](https://github.com/Kentico/xperience-by-kentico-labs-e2e-membership-testing/actions/runs/23347912210) for a specific workflow run.
+- [Download the playwright-report artifact](https://github.com/Kentico/xperience-by-kentico-labs-e2e-membership-testing/actions/runs/23347912210/artifacts/6027409808)
+- View the artifact's `index.html` report in your browser
+
+This project is part of the Kentico Community Portal blog post [Virtual Inbox, Real Tests: AI-driven E2E automation for Xperience by Kentico membership flows](https://community.kentico.com/blog/virtual-inbox-real-tests-ai-driven-e2e-automation-for-xperience-by-kentico-membership-flows)
 
 If you are interested in adding membership to your Xperience by Kentico project, explore the following resources:
 
@@ -21,15 +28,17 @@ If you are interested in adding membership to your Xperience by Kentico project,
 
 ### Dependencies
 
-- [ASP.NET Core 8.0](https://dotnet.microsoft.com/en-us/download)
+- [ASP.NET Core 10.0](https://dotnet.microsoft.com/en-us/download)
 - [Xperience by Kentico](https://docs.kentico.com)
 - [Node.js LTS](https://nodejs.org/en/download)
 
 ## Quick Start
 
-1. Install the project NuGet and npm dependencies
-2. [Create a database](https://docs.kentico.com/documentation/developers-and-admins/installation#create-the-project-database) for the Dancing Goat project
-3. Run the playwright tests by running `npx playwright test` in the `./tests` folder
+1. Clone this repository
+1. Install the project's NuGet and npm dependencies
+   - This can be done manually or through included VS Code tasks
+1. [Create a database](https://docs.kentico.com/documentation/developers-and-admins/installation#create-the-project-database) for the Dancing Goat project
+1. Run the playwright tests by running `npx playwright test` in the `./tests` folder
 
 ## Contributing
 
