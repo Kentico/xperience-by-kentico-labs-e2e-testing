@@ -6,7 +6,7 @@
     },
     "dancing-goat": {
       "type": "http",
-      "url": "http://localhost:44985/mcp"
+      "url": "http://localhost:21295/mcp"
     },
     "io.github.ChromeDevTools/chrome-devtools-mcp": {
       "type": "stdio",

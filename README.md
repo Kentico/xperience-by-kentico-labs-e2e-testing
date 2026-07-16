@@ -6,6 +6,8 @@
 
 This project uses Playwright and the Xperience by Kentico Virtual Inbox integration to drive E2E automated tests for membership experiences.
 
+It also demonstrates E2E testing of the **Xperience administration interface** — see [Admin UI E2E Testing](./docs/Admin-E2E-Testing.md) for how the admin sign-in, storage-state reuse, and selector policy are set up.
+
 It has a functioning GitHub actions CI pipeline that performs E2E tests on the Dancing Goat membership experience.
 
 You can review the CI GitHub workflow runs and Playwright test report:

@@ -1,5 +1,6 @@
 <Solution>
-  <Folder Name="/examples/">
-    <Project Path="examples/DancingGoat/DancingGoat.csproj" />
+  <Folder Name="/src/">
+    <Project Path="src/DancingGoat.Admin/DancingGoat.Admin.csproj" />
+    <Project Path="src/DancingGoat/DancingGoat.csproj" />
   </Folder>
 </Solution>

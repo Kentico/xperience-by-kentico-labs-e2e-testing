@@ -2,8 +2,9 @@ import { test, expect, type Page } from '@playwright/test';
 import { load } from 'cheerio';
 
 import { createEmailClient } from './emailMcpClient';
+import { appBaseUrl } from '../support/config';
 
-const registrationUrl = 'http://localhost:44985/account/register';
+const registrationUrl = `${appBaseUrl}/account/register`;
 const emailSubject = 'Confirm your email here';
 
 type WaitForEmailResult = {
@@ -90,7 +91,7 @@ test('registers, confirms email, and signs in', async ({ page }) => {
     await page.getByLabel('Password').fill(password);
     await page.getByRole('button', { name: 'Sign in' }).click();
 
-    await expect(page).toHaveURL('http://localhost:44985/');
+    await expect(page).toHaveURL(`${appBaseUrl}/`);
     await expect(page.getByRole('img', { name: 'avatar' })).toBeVisible();
   } finally {
     await emailClient.close();

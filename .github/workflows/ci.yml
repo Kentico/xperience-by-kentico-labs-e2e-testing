@@ -13,7 +13,7 @@ jobs:
     env:
       SQL_SERVER_HOST: localhost
       SQL_SERVER_SA_PASSWORD: Pass@12345
-      SQL_SERVER_DATABASE: xk-31-02-03
+      SQL_SERVER_DATABASE: xperience-by-kentico-labs-e2e-testing
     defaults:
       run:
         working-directory: tests
@@ -34,7 +34,7 @@ jobs:
         working-directory: .
         run: dotnet build --no-restore
       - name: Restore Dancing Goat tools
-        working-directory: examples/DancingGoat
+        working-directory: src/DancingGoat
         run: dotnet tool restore
       - name: Start SQL Server
         run: |
@@ -56,7 +56,7 @@ jobs:
           docker logs xperience-sql
           exit 1
       - name: Install Xperience database
-        working-directory: examples/DancingGoat
+        working-directory: src/DancingGoat
         env:
           KENTICO_LICENSE_FILE: ${{ secrets['KENTICO_LICENSE_FILE'] }}
         run: |

@@ -1,7 +1,7 @@
 import { Client } from '@modelcontextprotocol/sdk/client';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 
-const DEFAULT_DANCING_GOAT_MCP_URL = 'http://localhost:44985/mcp';
+import { mcpBaseUrl } from '../support/config';
 
 /**
  * Creates a connected MCP client for the Dancing Goat email server.
@@ -21,9 +21,7 @@ const DEFAULT_DANCING_GOAT_MCP_URL = 'http://localhost:44985/mcp';
  * @returns A connected MCP client instance.
  */
 export async function createEmailClient() {
-  const transport = new StreamableHTTPClientTransport(
-    new URL(process.env.DANCING_GOAT_MCP_URL ?? DEFAULT_DANCING_GOAT_MCP_URL),
-  );
+  const transport = new StreamableHTTPClientTransport(new URL(mcpBaseUrl));
 
   const client = new Client({
     name: 'playwright-tests',

@@ -1,5 +1,5 @@
 {
-  "name": "xk-31-02-03",
+  "name": "xperience-by-kentico-labs-e2e-testing",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,6 +8,15 @@
   "author": "Sean G. Wright <sean@seangwright.me> (https://www.seangwright.me/)",
   "license": "ISC",
   "type": "commonjs",
+  "scripts": {
+    "test": "playwright test",
+    "test:live-site": "playwright test --project=live-site",
+    "test:admin": "playwright test --project=admin-tests",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "install:browsers": "playwright install chromium",
+    "report": "playwright show-report"
+  },
   "devDependencies": {
     "@modelcontextprotocol/sdk": "1.27.1",
     "@playwright/test": "1.58.2",

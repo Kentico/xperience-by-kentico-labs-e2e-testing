@@ -39,7 +39,7 @@
         "watch",
         "run",
         "--project",
-        "${workspaceFolder}/examples/DancingGoat/DancingGoat.csproj"
+        "${workspaceFolder}/src/DancingGoat/DancingGoat.csproj"
       ],
       "options": {
         "env": {
