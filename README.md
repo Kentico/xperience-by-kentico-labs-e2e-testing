@@ -11,7 +11,7 @@ This project uses [Playwright](https://playwright.dev) to drive end-to-end (E2E)
 
 Tests are organized as [vertical slices](./docs/Admin-E2E-Testing.md#how-it-is-organized) — each feature owns its specs, page objects, and helpers in a single folder under `tests/e2e/`.
 
-For details on the administration testing setup — sign-in, storage-state reuse, and selector policy — see [Admin UI E2E Testing](./docs/Admin-E2E-Testing.md).
+For details on the administration testing setup — sign-in, storage-state reuse, and selector policy — see [Admin UI E2E Testing](./docs/Admin-E2E-Testing.md). For a hands-on walkthrough of adding a test for an admin UI extension, see [Testing Admin UI Extensions End-to-End](./docs/Testing-Admin-UI-Extensions.md).
 
 It has a functioning GitHub Actions CI pipeline that runs both the live-site and administration E2E suites against the Dancing Goat sample project.
 
