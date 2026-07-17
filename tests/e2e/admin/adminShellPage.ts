@@ -1,5 +1,5 @@
 import { expect, type Page } from "@playwright/test";
-import { adminBaseUrl } from "../../config";
+import { adminBaseUrl } from "../shared/config";
 
 // Page object for the top-level Xperience administration shell (the frame that
 // hosts the application navigation and dashboard). Keeping selectors for the

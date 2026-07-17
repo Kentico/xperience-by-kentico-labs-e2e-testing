@@ -1,6 +1,6 @@
 import path from "node:path";
 import { defineConfig, devices } from "@playwright/test";
-import { appBaseUrl, webServerTimeoutMs } from "./support/config";
+import { appBaseUrl, webServerTimeoutMs } from "./e2e/shared/config";
 
 /**
  * See https://playwright.dev/docs/test-configuration.

@@ -3,7 +3,7 @@ import {
   adminBaseUrl,
   adminDefaultPassword,
   adminDefaultUsername,
-} from "../config";
+} from "../shared/config";
 
 // The built-in Xperience administration sign-in form is not owned by this
 // codebase and its markup can shift between releases, so each field is matched

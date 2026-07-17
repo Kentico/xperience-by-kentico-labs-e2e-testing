@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { AdminShellPage } from "../../support/admin/pageObjects/adminShellPage";
+import { AdminShellPage } from "./adminShellPage";
 
 test.describe("admin sign-in smoke", () => {
   test("loads the administration shell for an authenticated admin", async ({

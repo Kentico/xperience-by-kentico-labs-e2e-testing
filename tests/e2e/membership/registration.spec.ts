@@ -1,8 +1,8 @@
 import { test, expect, type Page } from '@playwright/test';
 import { load } from 'cheerio';
 
-import { createEmailClient } from './emailMcpClient';
-import { appBaseUrl } from '../support/config';
+import { createEmailClient } from './emailClient';
+import { appBaseUrl } from '../shared/config';
 
 const registrationUrl = `${appBaseUrl}/account/register`;
 const emailSubject = 'Confirm your email here';

@@ -1,7 +1,7 @@
 import { Client } from '@modelcontextprotocol/sdk/client';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 
-import { mcpBaseUrl } from '../support/config';
+import { mcpBaseUrl } from '../shared/config';
 
 /**
  * Creates a connected MCP client for the Dancing Goat email server.

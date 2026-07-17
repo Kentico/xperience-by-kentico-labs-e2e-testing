@@ -15,20 +15,29 @@ with Playwright or Cypress. See the official guidance:
 
 ## How it is organized
 
+Tests follow a **vertical-slice** layout: each feature folder under `e2e/`
+holds everything for that feature — specs, page objects, helpers, and setup —
+so you never have to scan a parallel `support/` tree. Only genuinely
+feature-agnostic code lives in `e2e/shared/`.
+
 ```
 tests/
   playwright.config.ts              # live-site + admin-setup + admin-tests projects
-  support/
-    config.ts                       # base URLs and admin credentials (env-overridable)
-    admin/
-      auth.ts                       # resilient admin sign-in helper
-      pageObjects/
-        adminShellPage.ts           # page object for the administration shell
   e2e/
-    admin/
+    shared/
+      config.ts                     # environment contract: base URLs, admin creds, timeouts
+    membership/                      # live-site membership slice
+      emailClient.ts                # MCP email client (Virtual Inbox)
+      registration.spec.ts          # register → confirm email → sign in
+    admin/                           # administration UI slice
+      auth.ts                       # resilient admin sign-in helper
+      adminShellPage.ts             # page object for the administration shell
       auth.setup.ts                 # signs in once, persists storage state
       admin-signin.smoke.spec.ts    # basic "can sign in and load the shell" smoke test
 ```
+
+When a helper is used by only one slice it lives in that slice's folder; the
+moment a second slice needs it, that's the signal to promote it to `e2e/shared/`.
 
 ### Projects and shared authentication
 
@@ -48,7 +57,7 @@ it is regenerated on every run.
 ## Configuration
 
 All values have local defaults and can be overridden with environment variables
-(see `support/config.ts`):
+(see `e2e/shared/config.ts`):
 
 | Variable                 | Default                          | Purpose                                    |
 | ------------------------ | -------------------------------- | ------------------------------------------ |
@@ -119,5 +128,6 @@ suite — include:
   `iframe[title="Page builder"]`; Kentico web components expose open shadow roots
   that Playwright CSS selectors pierce automatically).
 
-Add new specs under `tests/e2e/admin/` and new page objects under
-`tests/support/admin/pageObjects/`.
+Add new specs, page objects, and helpers together under `tests/e2e/admin/`
+(the admin slice). For a brand-new area, create a new slice folder such as
+`tests/e2e/checkout/` holding its own specs and support code.

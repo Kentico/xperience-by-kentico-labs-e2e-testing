@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { test } from "@playwright/test";
-import { signInToAdmin } from "../../support/admin/auth";
+import { signInToAdmin } from "./auth";
 
 const adminStorageStatePath = path.resolve(
   __dirname,
