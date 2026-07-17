@@ -5,5 +5,9 @@ test-results/
 blob-report/
 playwright/.cache/
 
-# Persisted auth storage state contains live session cookies — never commit it.
+# Playwright storage state written by the admin-setup project (auth.setup.ts).
+# It contains live authentication cookies/tokens for the admin account, so
+# committing it would leak credentials into version control and quickly go
+# stale. It is machine-local and regenerated on every run, so it is never
+# committed — even locally, as a best practice.
 playwright/.auth/
