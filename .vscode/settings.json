@@ -36,5 +36,6 @@
 
   "files.associations": {
     ".azuredevops/**/*.yml": "azure-pipelines"
-  }
+  },
+  "github.copilot.chat.skillTool.enabled": true
 }

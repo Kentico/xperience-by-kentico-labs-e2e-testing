@@ -1,9 +1,11 @@
 {
   "mcpServers": {
     "kentico.docs.mcp": {
+      "type": "http",
       "url": "https://docs.kentico.com/mcp"
     },
     "dancing-goat": {
+      "type": "http",
       "url": "http://localhost:21295/mcp"
     },
     "io.github.ChromeDevTools/chrome-devtools-mcp": {
