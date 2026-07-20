@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
-  "keywords": [],
-  "author": "Sean G. Wright <sean@seangwright.me> (https://www.seangwright.me/)",
-  "license": "ISC",
-  "type": "commonjs",
   "scripts": {
     "test": "playwright test",
     "test:live-site": "playwright test --project=live-site",
@@ -17,10 +12,14 @@
     "install:browsers": "playwright install chromium",
     "report": "playwright show-report"
   },
+  "keywords": [],
+  "author": "Sean G. Wright <sean@seangwright.me> (https://www.seangwright.me/)",
+  "license": "ISC",
+  "type": "commonjs",
   "devDependencies": {
-    "@modelcontextprotocol/sdk": "1.27.1",
-    "@playwright/test": "1.58.2",
-    "@types/node": "25.5.0",
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "@playwright/test": "1.61.1",
+    "@types/node": "26.1.1",
     "cheerio": "1.2.0"
   }
 }
