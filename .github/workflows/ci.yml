@@ -27,6 +27,15 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
+      - name: Build admin client assets
+        # The admin UI is served in embedded mode: DancingGoat.Admin.csproj embeds
+        # Client/dist/** into the assembly at .NET build time. That output is not
+        # committed, so the client must be compiled BEFORE "Build .NET solution" or
+        # the custom admin app renders no client scripts and its E2E tests fail.
+        working-directory: src/DancingGoat.Admin/Client
+        run: |
+          npm ci
+          npm run build
       - name: Restore .NET dependencies
         working-directory: .
         run: dotnet restore
