@@ -59,20 +59,53 @@ it is regenerated on every run.
 All values have local defaults and can be overridden with environment variables
 (see `e2e/shared/config.ts`):
 
-| Variable                 | Default                          | Purpose                                    |
-| ------------------------ | -------------------------------- | ------------------------------------------ |
-| `DANCING_GOAT_BASE_URL`  | `http://localhost:21295`         | App base URL (live site).                  |
-| `ADMIN_BASE_URL`         | `<base>/admin`                   | Administration sign-in / shell entry point.|
-| `ADMIN_DEFAULT_USERNAME` | `administrator`                  | Admin account used for E2E sign-in.        |
-| `ADMIN_DEFAULT_PASSWORD` | `Pass@12345`                     | Admin account password (inject via secret).|
+| Variable                 | Default                  | Purpose                                     |
+| ------------------------ | ------------------------ | ------------------------------------------- |
+| `DANCING_GOAT_BASE_URL`  | `http://localhost:21295` | App base URL (live site).                   |
+| `ADMIN_BASE_URL`         | `<base>/admin`           | Administration sign-in / shell entry point. |
+| `ADMIN_DEFAULT_USERNAME` | `administrator`          | Admin account used for E2E sign-in.         |
+| `ADMIN_DEFAULT_PASSWORD` | `Pass@12345`             | Admin account password (inject via secret). |
 
 The DancingGoat database installer seeds a single `administrator` account whose
 password matches the SA password used during installation. In CI, supply
 `ADMIN_DEFAULT_PASSWORD` from GitHub Secrets rather than relying on the default.
 
+## Building the admin client assets first
+
+The custom administration extensions in this repository have a **client-side
+project** — a React/TypeScript app under `src/DancingGoat.Admin/Client/` (its own
+`package.json`, `webpack.config.js`, and `src/`). Webpack compiles it into
+`Client/dist/`, and `DancingGoat.Admin.csproj` embeds that `dist/` output into
+the assembly as admin client scripts:
+
+```xml
+<AdminClientPath Include="Client\dist\**">
+  <ProjectName>web-admin</ProjectName>
+</AdminClientPath>
+```
+
+Because DancingGoat serves the admin client scripts in **embedded mode**, the
+compiled assets are baked into the assembly at build time — the running app does
+**not** recompile TypeScript on the fly. So you must build the client **before**
+the DancingGoat app is built/run, or the admin UI (and these tests) will run
+against stale or missing client assets:
+
+```powershell
+# From src/DancingGoat.Admin/Client — do this BEFORE running the app
+npm ci
+npm run build   # webpack --mode=production → Client/dist
+```
+
+Re-run `npm run build` whenever you change a `.tsx`/`.ts` file under
+`Client/src/` (for example `CustomLayoutTemplate.tsx`), then restart the app so
+the freshly embedded assets are served. During active client development you can
+instead use Proxy mode dev server (`npm start`), but embedded mode is
+what CI and the E2E suite rely on. See the official guidance on
+[choosing how to serve client scripts](https://docs.kentico.com/documentation/developers-and-admins/customization/extend-the-administration-interface/prepare-your-environment-for-admin-development#choose-how-to-serve-client-scripts).
+
 ## Running the tests
 
-From the `tests/` folder:
+From the `tests/` folder (after building the client assets above):
 
 ```powershell
 npm ci
