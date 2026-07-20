@@ -1,6 +1,6 @@
 ---
 name: e2e-test-generator
-description: Turn a scenario context document (produced by e2e-test-context-discovery) into a passing Playwright E2E test, placed in the right vertical-slice folder, validated against the running app, then reviewed for coverage.
+description: Turn a scenario context document (produced by e2e-test-context-discovery) into a passing Playwright E2E test — placed in the right persona/feature vertical-slice folder, validated against the running app, then reviewed for coverage. Use when a scenario context document exists in tests/e2e/scenarios/ and the user wants the actual E2E test written and verified.
 argument-hint: Name of the scenario context document (e.g. users-reverse-last-name.e2e.md).
 context: fork
 metadata:
@@ -16,9 +16,10 @@ app, so its selectors, data, and assertion hints are trustworthy: translate them
 don't re-discover them.
 
 Run every command from the repository root
-(`xperience-by-kentico-labs-e2e-testing/`); file references in prose
-(`tests/e2e/…`, `src/DancingGoat…`) are repo-root-relative and doc cross-links are
-relative to this file. The validation harness is
+(`xperience-by-kentico-labs-e2e-testing/`). File references in prose
+(`tests/e2e/…`, `src/DancingGoat…`) and `<PROJECT_ROOT>/…` doc links are all
+relative to the repository root — `<PROJECT_ROOT>` stands in for it so the paths
+do not depend on where this skill file lives. The validation harness is
 `npx playwright test <spec>` from `tests/` — there is no separate driver.
 
 ## 0. Require the scenario context document
@@ -47,7 +48,7 @@ and feature**, honouring the doc's _Suggested spec location_:
 For a brand-new feature area create a new slice folder (e.g.
 `tests/e2e/checkout/`) holding its own spec + support code. Colocate any page
 object/helper you create with the spec in the same slice. See
-[docs/Admin-E2E-Testing.md](docs/Admin-E2E-Testing.md#how-it-is-organized).
+[docs/Admin-E2E-Testing.md](<PROJECT_ROOT>/docs/Admin-E2E-Testing.md#how-it-is-organized).
 
 ## 2. Translate the document into readable Playwright code
 

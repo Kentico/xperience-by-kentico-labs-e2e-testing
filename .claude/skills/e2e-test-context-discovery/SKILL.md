@@ -1,6 +1,6 @@
 ---
 name: e2e-test-context-discovery
-description: Explore a described administration-UI or public-website scenario in this project's Xperience by Kentico app, then record the gathered context into a document for a future E2E test.
+description: Explore a described administration-UI or public-website scenario in this project's Xperience by Kentico app by driving it with the Chrome DevTools MCP server, then record the navigation, selectors, and data into a scenario context document for a future Playwright E2E test. Use when capturing how a scenario works before its test is written, or as the first step feeding e2e-test-generator.
 argument-hint: The scenario to explore (e.g. 'member registration', 'create a new product', 'edit a page in Page Builder'). Include the goal and rough path through web pages and UI elements.
 context: fork
 compatibility:
@@ -17,9 +17,10 @@ needs — real selectors, navigation, and data — into a review document. You d
 **not** write the Playwright test; you produce the context for it.
 
 Run every command from the repository root
-(`xperience-by-kentico-labs-e2e-testing/`), and file references in prose
-(`tests/e2e/…`, `src/DancingGoat…`) are repo-root-relative; the doc cross-links
-are relative to this file so they stay clickable. The harness is the Chrome
+(`xperience-by-kentico-labs-e2e-testing/`). File references in prose
+(`tests/e2e/…`, `src/DancingGoat…`) and `<PROJECT_ROOT>/…` doc links are all
+relative to the repository root — `<PROJECT_ROOT>` stands in for it so the paths
+do not depend on where this skill file lives. The harness is the Chrome
 DevTools MCP tools (`io.github.ChromeDevTools/chrome-devtools-mcp`) —
 there is no driver script; the tool loop in
 [Discover the scenario](#4-discover-the-scenario-the-mcp-loop) is the harness.
@@ -50,8 +51,8 @@ those is the whole point — but it must name the goal and the rough path.
 The app is `src/DancingGoat` (+ `src/DancingGoat.Admin`). It serves the public
 site at `http://localhost:21295` and the admin UI at `/admin`. Full setup —
 database, license, .NET/Node versions — is in
-[docs/Contributing-Setup.md](../../../docs/Contributing-Setup.md) and
-[docs/Admin-E2E-Testing.md](../../../docs/Admin-E2E-Testing.md). A database must
+[docs/Contributing-Setup.md](<PROJECT_ROOT>/docs/Contributing-Setup.md) and
+[docs/Admin-E2E-Testing.md](<PROJECT_ROOT>/docs/Admin-E2E-Testing.md). A database must
 already exist.
 
 **The admin UI is served in embedded mode**, so the React admin client
@@ -131,7 +132,7 @@ a usable selector:
 ```
 
 Choose selectors per the repository **selector policy**
-([docs/Admin-E2E-Testing.md](../../../docs/Admin-E2E-Testing.md#selector-policy-for-the-admin-ui)):
+([docs/Admin-E2E-Testing.md](<PROJECT_ROOT>/docs/Admin-E2E-Testing.md#selector-policy-for-the-admin-ui)):
 ARIA role/name → label → stable text → `data-testid` (fallback) for built-in UI;
 for components owned in this repo an intentional `data-testid` is fine. Record
 both the chosen locator and a fallback.
@@ -193,4 +194,4 @@ observe it, it does not go in.
   first.
 - **`curl` returns `000` indefinitely**: the app didn't start. Check the
   `dotnet run` output for a DB connection or license error and report it; see
-  [docs/Contributing-Setup.md](../../../docs/Contributing-Setup.md).
+  [docs/Contributing-Setup.md](<PROJECT_ROOT>/docs/Contributing-Setup.md).
