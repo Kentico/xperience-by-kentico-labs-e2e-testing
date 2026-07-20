@@ -21,7 +21,9 @@ You can review the CI GitHub workflow runs and Playwright test report:
 - Open a specific workflow run and navigate to its artifacts
 - Download the `playwright-report` artifact and view its `index.html` report in your browser
 
-This project began as the companion to the Kentico Community Portal blog post [Virtual Inbox, Real Tests: AI-driven E2E automation for Xperience by Kentico membership flows](https://community.kentico.com/blog/virtual-inbox-real-tests-ai-driven-e2e-automation-for-xperience-by-kentico-membership-flows), and has since expanded to cover administration UI testing.
+This project began as the companion to the Kentico Community Portal blog post [Virtual Inbox, Real Tests: AI-driven E2E automation for Xperience by Kentico membership flows](https://community.kentico.com/blog/virtual-inbox-real-tests-ai-driven-e2e-automation-for-xperience-by-kentico-membership-flows)
+
+It has since expanded to cover administration UI testing as detailed in [E2E testing Xperience's Administration UI: Extension with Confidence](https://community.kentico.com/blog/e2e-testing-xperience-s-administration-ui-extension-with-confidence).
 
 ### Learn more
 
