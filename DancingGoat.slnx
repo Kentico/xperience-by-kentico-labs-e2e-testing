@@ -1,6 +1,8 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/DancingGoat.Admin/DancingGoat.Admin.csproj" />
+    <Project Path="src/DancingGoat.ServiceDefaults/DancingGoat.ServiceDefaults.csproj" />
     <Project Path="src/DancingGoat/DancingGoat.csproj" />
   </Folder>
+  <Project Path="DancingGoat.AppHost/DancingGoat.AppHost.csproj" />
 </Solution>

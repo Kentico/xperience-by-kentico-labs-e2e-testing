@@ -16,6 +16,7 @@ using Kentico.EmailBuilder.Web.Mvc;
 using Kentico.Membership;
 using Kentico.OnlineMarketing.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
+using Kentico.Xperience.ManagementApi;
 using Kentico.Xperience.Mjml;
 using Kentico.Xperience.VirtualInbox;
 using Kentico.Xperience.VirtualInbox.MCP;
@@ -40,6 +41,10 @@ using DancingGoat.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Aspire service defaults: OpenTelemetry, health checks, service discovery, and HTTP resilience.
+// These are no-ops when the app runs standalone (e.g. `dotnet run` for Playwright E2E tests) because
+// the OTLP exporter only activates when the Aspire AppHost supplies OTEL_EXPORTER_OTLP_ENDPOINT.
+builder.AddServiceDefaults();
 
 builder.Services.AddKentico(features =>
 {
@@ -85,6 +90,16 @@ if (builder.Environment.IsDevelopment())
         .AddMcpServer()
         .WithHttpTransport()
         .WithVirtualInboxTools();
+
+    // Xperience Management API (preview) — LOCAL DEVELOPMENT ONLY. Exposes CMS content-model and
+    // content-management endpoints under /kentico-api/management, consumed by the
+    // @kentico/management-api-mcp server (see .mcp.json). The secret authenticates every request and
+    // must match MANAGEMENT_API_SECRET in the MCP server config; it lives in appsettings.Development.json
+    // alongside the other committed local-dev values.
+    builder.Services.AddKenticoManagementApi(options =>
+    {
+        options.Secret = builder.Configuration["Kentico:ManagementApi:Secret"];
+    });
 }
 
 ConfigureEmailBuilder(builder.Services);
@@ -98,6 +113,9 @@ if (builder.Environment.IsDevelopment())
 
 var app = builder.Build();
 
+// Maps /health and /alive (Development only) so the Aspire dashboard and `WaitFor` can probe readiness.
+app.MapDefaultEndpoints();
+
 app.InitKentico();
 
 app.UseStaticFiles();
@@ -106,6 +124,11 @@ app.UseCookiePolicy();
 
 app.UseAuthentication();
 
+if (app.Environment.IsDevelopment())
+{
+    // Management API middleware — must sit after UseAuthentication() and before UseKentico().
+    app.UseKenticoManagementApi();
+}
 
 app.UseKentico();
 

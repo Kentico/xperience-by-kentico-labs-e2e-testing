@@ -23,11 +23,14 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\DancingGoat.Admin\DancingGoat.Admin.csproj" />
+    <!-- Aspire ServiceDefaults: OpenTelemetry, health checks, service discovery, HTTP resilience. -->
+    <ProjectReference Include="..\DancingGoat.ServiceDefaults\DancingGoat.ServiceDefaults.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="kentico.xperience.admin" Condition="'$(SeparatedAdmin)' == 'false'" />
     <PackageReference Include="kentico.xperience.azurestorage" />
     <PackageReference Include="kentico.xperience.imageprocessing" />
+    <PackageReference Include="kentico.xperience.managementapi" />
     <PackageReference Include="kentico.xperience.mjml" />
     <PackageReference Include="kentico.xperience.virtualinbox" />
     <PackageReference Include="kentico.xperience.virtualinbox.admin" />

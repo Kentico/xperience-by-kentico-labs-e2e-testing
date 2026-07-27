@@ -60,6 +60,25 @@ Adding membership to your Xperience by Kentico project:
 
 See [Admin UI E2E Testing](./docs/Admin-E2E-Testing.md) for configuration, running options, and the administration selector policy.
 
+## Running with Aspire (optional)
+
+This project is also a showcase for adding [Aspire](https://aspire.dev) to an Xperience by Kentico
+application. With the [Aspire CLI](https://aspire.dev/get-started/) and Docker installed, a single
+command launches the app, wires it to SQL Server, runs both Node client-build watchers, and opens a
+dashboard with live logs, traces, and metrics:
+
+```bash
+aspire run
+```
+
+Aspire is entirely optional — the app and the Playwright E2E suite still run standalone with
+`dotnet run` exactly as documented above. For the full integration walkthrough, the
+Xperience-specific decisions, and how Aspire's MCP servers combine with Xperience's management/docs
+MCP servers in an agentic workflow, see:
+
+- [Adding Aspire to Xperience by Kentico](./docs/aspire-integration.md)
+- [Aspire in an agentic Xperience workflow](./docs/aspire-agentic-workflow.md)
+
 ## Contributing
 
 To see the guidelines for Contributing to Kentico open source software, please see [Kentico's `CONTRIBUTING.md`](https://github.com/Kentico/.github/blob/main/CONTRIBUTING.md) for more information and follow the [Kentico's `CODE_OF_CONDUCT`](https://github.com/Kentico/.github/blob/main/CODE_OF_CONDUCT.md).

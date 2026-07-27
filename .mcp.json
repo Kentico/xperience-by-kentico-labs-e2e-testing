@@ -1,5 +1,9 @@
 {
   "mcpServers": {
+    "aspire": {
+      "command": "aspire",
+      "args": ["agent", "mcp"]
+    },
     "kentico.docs.mcp": {
       "type": "http",
       "url": "https://docs.kentico.com/mcp"
@@ -7,6 +11,15 @@
     "dancing-goat": {
       "type": "http",
       "url": "http://localhost:21295/mcp"
+    },
+    "xperience-management": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["@kentico/management-api-mcp@latest", "--dynamic-tools"],
+      "env": {
+        "MANAGEMENT_API_URL": "http://localhost:21295/kentico-api/management",
+        "MANAGEMENT_API_SECRET": "dancinggoat-mgmt-api-local-dev-secret-0001"
+      }
     },
     "io.github.ChromeDevTools/chrome-devtools-mcp": {
       "command": "npx",
